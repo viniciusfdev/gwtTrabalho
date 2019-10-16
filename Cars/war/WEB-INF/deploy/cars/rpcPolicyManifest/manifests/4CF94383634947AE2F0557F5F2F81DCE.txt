@@ -1,0 +1,2 @@
+serviceClass: com.tutorialspoint.client.CarService
+path: B83416AE965D1455CD16051E7CF17B5A.gwt.rpc
