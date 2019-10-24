@@ -30,19 +30,20 @@
     </div>
   </nav>
 
-  <table style="width:100%">
-    <tr>
-        <th>ID</th>
-        <th>Endereço</th>
-    </tr>
-    {% for address in addresses %}
-        <tr>
-            <th>{{ address[0] }}</th>
-            <th>{{ address[1] }}</th>
-        </tr>
-    {% endfor %}
-</table>
-
+  <div class="row">
+    <table style="width:100%">
+      <tr>
+          <th>ID</th>
+          <th>Endereço</th>
+      </tr>
+      {% for address in addresses %}
+          <tr>
+              <th>{{ address[0] }}</th>
+              <th>{{ address[1] }}</th>
+          </tr>
+      {% endfor %}
+    </table>
+  </div>
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
