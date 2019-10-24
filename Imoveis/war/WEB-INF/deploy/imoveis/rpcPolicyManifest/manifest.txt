@@ -1,3 +1,0 @@
-# Module imoveis
-# RPC service class, partial path of RPC policy file
-pacote.client.GreetingService, 58DC6358FC0F7ED2F4DE6C977713B1B7.gwt.rpc
