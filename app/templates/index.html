@@ -6,15 +6,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="author" content="Vinicius, Zillaine, Malvgomes, SrFreitas">
 
-  <title>Trabalho "GWT"</title>
+  <title>Trabalho Corretora</title>
 
-  <!-- Bootstrap core CSS -->
+  <!-- Bootstrap core CSS-->
   <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/css/sheet.css" rel="stylesheet">
 
-  <!-- Custom styles for this template -->
-  <link href="/static/css/shop-homepage.css" rel="stylesheet">
+  <script src="/static/vendor/jquery/jquery.min.js" type="text/javascript"></script>
 
 </head>
 
@@ -22,32 +22,31 @@
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="/">Batata</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <a class="navbar-brand" href="/"><strong>Corretora</strong></a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="casa">Casas</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="apartamento">Apartamentos</a>
+          </li>
+      </ul>
     </div>
   </nav>
 
-  <div class="row">
-    <table style="width:100%">
-      <tr>
-          <th>ID</th>
-          <th>Endereço</th>
-      </tr>
-      {% for address in addresses %}
-          <tr>
-              <th>{{ address[0] }}</th>
-              <th>{{ address[1] }}</th>
-          </tr>
-      {% endfor %}
-    </table>
+  <div class="content-fluid">
+    {% block content %}{% endblock %}
   </div>
+
   <!-- Footer -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Batata 2019</p>
+  <footer class="page-footer py-3 bg-dark fixed-bottom">
+    <div id="footer-elements" class="container">
+      <p class="m-0 text-center text-white">Participantes</p>
+      <p class="m-0 text-center text-white">Vinicius França, Gustavo Zille, Matheus Alves</p>
+      <p class="m-0 text-center text-white">Engenharia de Software</p>
     </div>
     <!-- /.container -->
   </footer>

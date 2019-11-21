@@ -23,9 +23,9 @@ CREATE TABLE public.imovel(
 	area double precision,
 	n_salas_estar smallint,
 	n_vagas_garagem smallint,
-	id_imovel serial NOT NULL,
 	descricao varchar,
 	id_endereco integer,
+	id_imovel serial NOT NULL,
 	CONSTRAINT pk_imovel PRIMARY KEY (id_imovel)
 
 );
@@ -36,12 +36,13 @@ ALTER TABLE public.imovel OWNER TO postgres;
 -- object: public.apartamento | type: TABLE --
 -- DROP TABLE IF EXISTS public.apartamento CASCADE;
 CREATE TABLE public.apartamento(
-	id_apartamento serial NOT NULL,
 	n_andar smallint,
 	valor_condominio double precision DEFAULT 0,
 	b_portaria boolean DEFAULT FALSE,
 	n_salas_jantar smallint,
+	n_apartamento smallint,
 	id_imovel integer NOT NULL,
+	id_apartamento serial NOT NULL,
 	CONSTRAINT pk_apartamento PRIMARY KEY (id_apartamento)
 
 );
@@ -54,6 +55,7 @@ ALTER TABLE public.apartamento OWNER TO postgres;
 CREATE TABLE public.casa(
 	id_casa serial NOT NULL,
 	id_imovel integer NOT NULL,
+	b_quintal boolean DEFAULT FALSE,
 	CONSTRAINT pk_casa PRIMARY KEY (id_casa)
 
 );
@@ -64,11 +66,11 @@ ALTER TABLE public.casa OWNER TO postgres;
 -- object: public.endereco | type: TABLE --
 -- DROP TABLE IF EXISTS public.endereco CASCADE;
 CREATE TABLE public.endereco(
-	id_endereco serial NOT NULL,
 	numero smallint,
 	rua varchar,
 	cidade varchar,
 	bairro varchar,
+	id_endereco serial NOT NULL,
 	CONSTRAINT id_endereco PRIMARY KEY (id_endereco)
 
 );
@@ -107,89 +109,61 @@ REFERENCES public.endereco (id_endereco) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
---INCREMENTS
+--#####TEST INSERTS###
+--ENDERECOS
+INSERT INTO endereco
+(numero, rua, cidade, bairro)
+VALUES(10, 'Onde a vida Acaba', 'Ogod Mindé', 'Barreiro');
 
-INSERT INTO endereco (numero, rua, cidade, bairro) 
-	VALUES(666, 'São João Del Rey', 'Bailão de barro', 'Lurdes');
+INSERT INTO endereco
+(numero, rua, cidade, bairro)
+VALUES(20, 'Vida de Ouro', 'Cidade dos anjos', 'Dark Kignight');
 
-INSERT INTO endereco (numero, rua, cidade, bairro) 
-	VALUES(111, 'Cara Leojao', 'Timeto a Faca', 'Samanbaia');
+INSERT INTO endereco
+(numero, rua, cidade, bairro)
+VALUES(30, 'Shisui Guerreiro', 'Shippuden', 'Naruto');
 
-INSERT INTO endereco (numero, rua, cidade, bairro) 
-	VALUES(222, 'Ponta Esquerda do Parana', 'Belo Horizonte', 'Botijão');
+--IMOVEIS
+INSERT INTO imovel
+(b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, 
+descricao, id_endereco)
+VALUES(True, 1, 1, 1000.0, 2, 1, 'Um lugar belo.', 1);
 
-INSERT INTO endereco (numero, rua, cidade, bairro) 
-	VALUES(444, 'Maite Proença', 'Fernao Dias', 'Samuca');
+INSERT INTO imovel
+(b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, 
+descricao, id_endereco)
+VALUES(False, 2, 2, 2000.0, 2, 2, 'Um lugar confortável.', 2);
 
-INSERT INTO endereco (numero, rua, cidade, bairro) 
-	VALUES(323, 'Magos de Mentira', 'Belas Artes', 'Paodelupe');
+INSERT INTO imovel
+(b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, 
+descricao, id_endereco)
+VALUES(True, 3, 3, 3000.0, 3, 3, 'Um lugar interessante.', 3);
 
-INSERT INTO endereco (numero, rua, cidade, bairro) 
-	VALUES(66, 'Del Rey', 'Bailão de barro', 'Lurdes');
+--CASAS
+INSERT INTO casa
+(id_imovel, b_quintal)
+VALUES(1, True);
 
-INSERT INTO endereco (numero, rua, cidade, bairro) 
-	VALUES(55, 'Natamanu', 'Faca', 'Pedreira');
+INSERT INTO casa
+(id_imovel, b_quintal)
+VALUES(2, True);
 
-INSERT INTO endereco (numero, rua, cidade, bairro) 
-	VALUES(222, 'Torce Dordogalo', 'Belo Horizonte', 'Casca Noz');
+INSERT INTO casa
+(id_imovel, b_quintal)
+VALUES(3, False);
 
-INSERT INTO endereco (numero, rua, cidade, bairro) 
-	VALUES(33, 'Proença', 'Fernao Dias', 'Zillaine');
+--APARTAMENTO
+INSERT INTO apartamento
+(n_andar, valor_condominio, b_portaria, n_salas_jantar,
+n_apartamento, id_imovel)
+VALUES(1, 100, True, 1, 301, 1);
 
-INSERT INTO endereco (numero, rua, cidade, bairro) 
-	VALUES(77, 'Flask', 'Belas Artes', 'God das Artes');
+INSERT INTO apartamento
+(n_andar, valor_condominio, b_portaria, n_salas_jantar,
+n_apartamento, id_imovel)
+VALUES(2, 200, True, 2, 201, 2);
 
-INSERT INTO imovel (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, descricao, id_endereco)
-	VALUES(true, 5, 1, 988.9, 1, 3, 'Proximo a escola e comercio.', 1);
-
-INSERT INTO imovel (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, descricao, id_endereco)
-	VALUES(true, 1, 2, 188.9, 2, 3, 'Proximo a escola e comercio.', 2);
-
-INSERT INTO imovel (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, descricao, id_endereco)
-	VALUES(false, 2, 0, 288.9, 2, 3, 'Proximo a escola e comercio.', 3);
-
-INSERT INTO imovel (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, descricao, id_endereco)
-	VALUES(true, 3, 0, 388.9, 3, 3, 'Proximo a escola e comercio.', 4);
-
-INSERT INTO imovel (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, descricao, id_endereco)
-	VALUES(false, 4, 2, 488.9, 2, 3, 'Proximo a escola e comercio.', 5);
-
-INSERT INTO imovel (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, descricao, id_endereco)
-	VALUES(true, 5, 3, 588.9, 2, 3, 'Proximo a escola e comercio.', 6);
-
-INSERT INTO imovel (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, descricao, id_endereco)
-	VALUES(false, 1, 1, 688.9, 2, 2, 'Proximo a escola e comercio.', 7);
-
-INSERT INTO imovel (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, descricao, id_endereco)
-	VALUES(true, 2, 0, 788.9, 1, 2, 'Proximo a escola e comercio.', 8);
-
-INSERT INTO imovel (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, descricao, id_endereco)
-	VALUES(true, 3, 1, 888.9, 3, 1, 'Proximo a escola e comercio.', 9);
-
-INSERT INTO imovel (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, descricao, id_endereco)
-	VALUES(true, 4, 0, 88.9, 4, 1, 'Proximo a escola e comercio.', 10);
-
-INSERT INTO apartamento (n_andar, valor_condominio, b_portaria, n_salas_jantar, id_imovel)
-	VALUES(1, 658000.5, true, 1, 1);
-
-INSERT INTO apartamento (n_andar, valor_condominio, b_portaria, n_salas_jantar, id_imovel)
-	VALUES(5, 208000.5, true, 3, 2);
-
-INSERT INTO apartamento (n_andar, valor_condominio, b_portaria, n_salas_jantar, id_imovel)
-	VALUES(3, 58000.1, false, 1, 3);
-
-INSERT INTO apartamento (n_andar, valor_condominio, b_portaria, n_salas_jantar, id_imovel)
-	VALUES(4, 158000.2, true, 2, 4);
-
-INSERT INTO apartamento (n_andar, valor_condominio, b_portaria, n_salas_jantar, id_imovel)
-	VALUES(1, 68000.5, false, 1, 5);
-
-INSERT INTO casa (id_imovel) VALUES(6);
-
-INSERT INTO casa (id_imovel) VALUES(7);
-
-INSERT INTO casa (id_imovel) VALUES(8);
-
-INSERT INTO casa (id_imovel) VALUES(9);
-
-INSERT INTO casa (id_imovel) VALUES(10);
+INSERT INTO apartamento
+(n_andar, valor_condominio, b_portaria, n_salas_jantar,
+n_apartamento, id_imovel)
+VALUES(3, 300, True, 3, 301, 3);

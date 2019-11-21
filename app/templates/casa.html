@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col">
+    <p>Casas</p>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Contém armário</th>
+          <th scope="col">N# de Quartos</th>
+          <th scope="col">N# de Suites</th>
+          <th scope="col">Área em M²</th>
+          <th scope="col">N# de Salas de Estar</th>
+          <th scope="col">N# de vagas na garagem</th>
+          <th scope="col">Descricao</th>
+          <th scope="col">Contém quintal</th>
+          <th scope="col">Endereço</th>
+          <th scope="col">Remover</th>
+          <th scope="col">Atualizar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for casa in casas %}
+          <tr>
+              <td>{% if casa[0] %} Sim {% else %} Não {% endif %}</td>
+              <td>{{ casa[1] }}</td>
+              <td>{{ casa[2] }}</td>
+              <td>{{ casa[3] }}</td>
+              <td>{{ casa[4] }}</td>
+              <td>{{ casa[5] }}</td>
+              <td>{{ casa[6] }}</td>
+              <td>{% if casa[7] %} Sim {% else %} Não {% endif %}</td>
+              <td>{{ casa[11] }} : {{ casa[10] }} : 
+              {{ casa[9] }} : {{ casa[8] }}</td>
+              
+              <td style="text-align: center;">
+                <form method="get" action="" id="formDelete{{ casa[12] }}">
+                  <input type="hidden" name="delete" value="{{ casa[12] }}">
+                  <button class="btn btn-dark" type="submit" form="formDelete{{ casa[12] }}">X</button>
+                </form>
+              </td>
+              <td style="text-align: center;">
+                <form method="get" action="update" id="formUpdate{{ casa[12] }}">
+                  <input type="hidden" name="type" value="3">
+                  <input type="hidden" name="update" value="{{ casa[12] }}">
+                  <button class="btn btn-dark" type="submit" form="formUpdate{{ casa[12] }}">U</button>
+                </form>
+              </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <p>Cadastrar</p>
+    <form method="post">
+        <div class="form-group">
+            <label for="endereco"></label>
+            <select name="endereco" class="custom-select">
+                {% for endereco in enderecos %}
+                    <option value="{{ endereco[0] }}">{{ endereco[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+      <button type="submit" class="btn btn-dark btn-lg btn-block">Cadastrar</button>
+    </form>
+
+  <!--   {% if mostra_aviso %}
+    <div class="alert alert-danger" role="alert" style="margin-top: 56px;">
+      <strong>Ops!</strong> Combinação já existente.
+    </div>
+    {% endif %}
+
+    {% if msg != "" %}
+    <div class="alert alert-danger" role="alert" style="margin-top: 56px;">
+      <strong>Ops!</strong> Impossível remover o preço.
+    </div>
+    {% endif %} -->
+  </div>
+</div>
+
+{% endblock %}

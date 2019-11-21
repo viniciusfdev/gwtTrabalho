@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    {% if op == "1" %}
+        <div style="text-align: center;" class="row">
+            <div class="col">
+                <form method="post">
+                    <div class="form-group">
+                    </div>
+                    <button type="submit" class="btn btn-dark btn-lg btn-block">Atualizar</button>
+                </form>
+
+                {% if mostra_aviso %}
+                <div class="alert alert-danger" role="alert" style="margin-top: 56px;">
+                    <strong>Ops!</strong> Tipo já existente.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    {% elif op == "2" %}
+        <div style="text-align: center;" class="row">
+            <div class="col">
+                <form method="post">
+                    <div class="form-group">
+                    </div>
+                    <button type="submit" class="btn btn-dark btn-lg btn-block">Atualizar</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
