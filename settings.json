@@ -1,9 +1,0 @@
-{
-    "database": {
-        "name"     : "corretora",
-        "user"     : "postgres",
-        "password" : "",
-        "host"     : "localhost",
-        "port"     : "5432"
-    }
-}
