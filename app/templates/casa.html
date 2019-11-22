@@ -56,7 +56,22 @@
 
 <div class="row">
   <div class="col">
-    <p>Cadastrar</p>
+    <p>Cadastrar Casa</p>
+    <form method="post">
+        <div class="form-group">
+            
+            <label for="endereco"></label>
+            <select name="endereco" class="custom-select">
+                {% for endereco in enderecos %}
+                    <option value="{{ endereco[0] }}">{{ endereco[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+      <button type="submit" class="btn btn-dark btn-lg btn-block">Cadastrar</button>
+    </form>
+  </div>
+  <div class="col">
+    <p>Cadastrar Endereco</p>
     <form method="post">
         <div class="form-group">
             <label for="endereco"></label>
@@ -68,18 +83,6 @@
         </div>
       <button type="submit" class="btn btn-dark btn-lg btn-block">Cadastrar</button>
     </form>
-
-  <!--   {% if mostra_aviso %}
-    <div class="alert alert-danger" role="alert" style="margin-top: 56px;">
-      <strong>Ops!</strong> Combinação já existente.
-    </div>
-    {% endif %}
-
-    {% if msg != "" %}
-    <div class="alert alert-danger" role="alert" style="margin-top: 56px;">
-      <strong>Ops!</strong> Impossível remover o preço.
-    </div>
-    {% endif %} -->
   </div>
 </div>
 

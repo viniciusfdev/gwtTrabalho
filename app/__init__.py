@@ -51,8 +51,25 @@ def get_casas():
     conn.close()
     return data
 
-@app.route('/casa')
+@app.route('/casa', methods=['GET', 'POST'])
 def casa():
+    if request.method == 'POST':
+        id_imovel = request.form['id_imovel']
+        id_endereco = request.form['id_endereco']
+        b_quintal = request.form['b_quintal']
+        b_armario = request.form['b_armario']
+        n_quartos = request.form['n_quartos']
+        n_suites = request.form['n_suites']
+        area = request.form['area']
+        n_salas_estar = request.form['n_salas_estar']
+        n_vagas_garagem = request.form['n_vagas_garagem']
+        descricao = request.form['descricao']
+        resp = True if insert_casa(, ) else False
+
+    deleteID = request.args.get('delete')
+    if deleteID is not None:
+        msg = delete_casa(deleteID)
+
     casas = get_casas()
     return render_template('casa.html', casas=casas)
 
