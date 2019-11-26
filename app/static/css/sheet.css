@@ -14,3 +14,8 @@ body {
 .content-fluid {
 	padding-bottom: 7em;
 }
+
+tbody{
+	overflow: auto;
+	height: 200px;
+}

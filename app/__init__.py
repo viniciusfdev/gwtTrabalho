@@ -117,6 +117,11 @@ def delete_casa(id_casa):
 def update():
     return None
 
+@app.route('/endereco', methods=['GET', 'POST']):
+def endereco():
+    enderecos = get_enderecos()
+    return render_template('endereco.html', enderecos=enderecos)
+
 @app.route('/casa', methods=['GET', 'POST'])
 def casa():
     if request.method == 'POST':
