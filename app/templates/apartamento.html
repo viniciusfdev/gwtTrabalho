@@ -1,0 +1,148 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col">
+    <h2>Apartamentos</h2>
+    <table class="table table-bordered">
+      <thead class="thead">
+        <tr>
+          <th scope="col">Armário</th>
+          <th scope="col">Quartos</th>
+          <th scope="col">Suites</th>
+          <th scope="col">M²</th>
+          <th scope="col">Salas de Estar</th>
+          <th scope="col">Vagas na Garagem</th>
+          <th scope="col">Descricao</th>
+          <th scope="col">Endereço</th>
+          <th scope="col">Valor</th>
+          <th scope="col">Andar</th>
+          <th scope="col">Condomínio</th>
+          <th scope="col">P. 24h</th>
+          <th scope="col">Salas de Jantar</th>
+          <th scope="col">Nmr.</th>
+          <th scope="col">Remover</th>
+          <th scope="col">Atualizar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for apto in aptos %}
+          <tr>
+              <td>{% if apto[0] %} Sim {% else %} Não {% endif %}</td>
+              <td>{{ apto[1] }}</td>
+              <td>{{ apto[2] }}</td>
+              <td>{{ apto[3] }}</td>
+              <td>{{ apto[4] }}</td>
+              <td>{{ apto[5] }}</td>
+              <td>{{ apto[6] }}</td>
+              <td>{{ apto[10] }} : {{ apto[9] }} : {{ apto[8] }} : {{ apto[7] }}</td>
+              <td>{{ apto[11] }}</td>
+              <td>{{ apto[12] }}</td>
+              <td>{{ apto[13] }}</td>
+              <td>{% if apto[14] %} Sim {% else %} Não {% endif %}</td>
+              <td>{{ apto[15] }}</td>
+              <td>{{ apto[16] }}</td>
+              <td style="text-align: center;">
+                <form method="get" action="apto" id="id_formDelete{{ apto[17] }}">
+                  <input type="hidden" name="delete" value="{{ apto[17] }}">
+                  <button class="btn btn-dark" type="submit" form="formDelete{{ apto[17] }}">X</button>
+                </form>
+              </td>
+              <td style="text-align: center;">
+                <form method="get" action="update" id="id_formUpdate{{ apto[17] }}">
+                  <input type="hidden" name="type" value="2">
+                  <input type="hidden" name="update" value="{{ apto[17] }}">
+                  <button class="btn btn-dark" type="submit" form="formUpdate{{ apto[17] }}">U</button>
+                </form>
+              </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <h2>Cadastrar Apartamento</h2>
+    <form method="post">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                <label for="id_n_quartos">Qtd. de quartos</label>
+                <input class="form-control" type="number" name="n_quartos" id="id_n_quartos" required>
+                </div>
+                <div class="form-group">
+                <label for="id_n_suites">Qtd. de suites</label>
+                <input class="form-control" type="number" name="n_suites" id="id_n_suites" required>
+                </div>
+                <div class="form-group">
+                <label for="id_area">Área(m²)</label>
+                <input class="form-control" type="" name="area" step=".01" id="id_area" required>
+                </div>
+                <div class="form-group">
+                <label for="id_n_salas_estar">Qtd. de salas de estar</label>
+                <input class="form-control" type="number" name="n_salas_estar" id="id_n_salas_estar"  required>
+                </div>
+                <div class="form-group">
+                <label for="id_n_vagas_garagem">Qtd. vagas na garagem</label>
+                <input class="form-control" type="number" name="n_vagas_garagem" id="id_n_vagas_garagem" required>
+                </div>
+                <div class="form-group">
+                <label for="id_descricao">Descrição do imovél</label>
+                <textarea class="form-control" type="text" name="descricao" rows="3" id="id_descricao"></textarea>
+                </div>
+                <div class="form-group">
+                <label for="id_valor_aluguel">Valor aluguel</label>
+                <input class="form-control" type="number" step=".01" name="valor_aluguel" id="id_valor_aluguel">
+                </div>
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="b_armario" id="id_b_armario" required>
+                <label class="form-check-label" for="id_b_armario">Possui armário embutido</label>
+                </div>
+                <div class="form-group">
+                    <label for="id_endereco"></label>
+                    <select name="id_endereco" class="custom-select">
+                        {% for endereco in enderecos %}
+                            <option value="{{ endereco[4] }}">{{ endereco[0] }} :  {{ endereco[1] }} : {{ endereco[2] }} : {{ endereco[3] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                <label for="id_n_andar">Número do andar</label>
+                <input class="form-control" type="number" name="n_andar" id="id_n_andar" required>
+                </div>
+                <div class="form-group">
+                <label for="id_valor_condominio">Valor condomínio</label>
+                <input class="form-control" type="number" step=".01" name="valor_condominio" id="id_valor_condominio">
+                </div>
+                <div class="form-group">
+                    <label for="id_n_salas_jantar">Qtd. de salas de jantar</label>
+                    <input class="form-control" type="number" name="n_salas_jantar" id="id_n_salas_jantar" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_n_apartamento">Número do apartamento</label>
+                    <input class="form-control" type="number" name="n_apartamento" id="id_n_apartamento" required>
+                </div>
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="b_portaria" id="id_b_portaria" required>
+                <label class="form-check-label" for="id_b_portaria">Possui portaria 24h</label>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <button type="submit" class="btn btn-dark btn-lg btn-block">Cadastrar</button>
+        </div>
+    </form>
+  </div>
+</div>
+
+<div style="padding-top: 1em;" class="row">
+    <form class="col" method="get" action="endereco">
+    <button class="btn btn-dark" type="submit">Usar outro endereço</button>
+    </form>
+</div>
+
+{% endblock %}

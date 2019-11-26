@@ -82,10 +82,10 @@ def insert_casa(values):
     n_vagas_garagem = values['n_vagas_garagem']
     descricao = values['descricao']
     valor_aluguel = values['valor_aluguel']
-    
+
     conn = get_database()
     cur = conn.cursor()
-    
+
     cur.execute('''
         INSERT INTO imovel (b_armario, n_quartos, n_suites,
         area, n_salas_estar, n_vagas_garagem, descricao,
@@ -93,11 +93,11 @@ def insert_casa(values):
         VALUES({}, {}, {}, {}, {}, {}, '{}', {}, {})
         RETURNING id_imovel;
     '''.format(b_armario, n_quartos, n_suites,
-        area, n_salas_estar, n_vagas_garagem, descricao, 
+        area, n_salas_estar, n_vagas_garagem, descricao,
         valor_aluguel, id_endereco))
-    
+
     data = cur.fetchall()
-    
+
     cur.execute('''
         INSERT INTO casa (id_imovel)
         VALUES({})
@@ -106,11 +106,10 @@ def insert_casa(values):
     conn.commit()
     conn.close()
 
-
 def delete_casa(id_casa):
     conn = get_database()
     cur = conn.cursor()
-    
+
     cur.execute('''
     SELECT
         id_imovel
@@ -127,7 +126,102 @@ def delete_casa(id_casa):
     cur.execute('''
         DELETE FROM casa WHERE id_imovel = {}
     '''.format(data[0][0]))
-    
+
+    conn.commit()
+    conn.close()
+
+def get_apartamentos():
+    conn = get_database()
+    cur = conn.cursor()
+    cur.execute('''
+    SELECT
+        b_armario, n_quartos, n_suites,
+        area, n_salas_estar, n_vagas_garagem,
+        descricao, numero, rua,
+        bairro, cidade, valor_aluguel,
+        n_andar, valor_condominio, b_portaria,
+        n_salas_jantar, n_apartamento,
+        id_apartamento
+    FROM imovel
+    NATURAL JOIN endereco
+    NATURAL JOIN apartamento;
+    ''')
+    data = cur.fetchall()
+    conn.commit()
+    conn.close()
+    return data
+
+def insert_apartamento(values):
+    id_endereco = values['id_endereco']
+    b_armario = values['b_armario']
+    if(b_armario == "on"):
+        b_armario = True
+    else:
+        b_armario = False
+    n_quartos = values['n_quartos']
+    n_suites = values['n_suites']
+    area = values['area']
+    n_salas_estar = values['n_salas_estar']
+    n_vagas_garagem = values['n_vagas_garagem']
+    descricao = values['descricao']
+    valor_aluguel = values['valor_aluguel']
+
+    n_andar = values['n_andar']
+    valor_condominio = values['valor_condominio']
+    b_portaria = values['b_portaria']
+    if(b_portaria == "on"):
+        b_portaria = True
+    else:
+        b_portaria = False
+    n_salas_jantar = values['n_salas_jantar']
+    n_apartamento = values['n_apartamento']
+
+    conn = get_database()
+    cur = conn.cursor()
+
+    cur.execute('''
+        INSERT INTO imovel (b_armario, n_quartos, n_suites,
+        area, n_salas_estar, n_vagas_garagem, descricao,
+        valor_aluguel, id_endereco)
+        VALUES({}, {}, {}, {}, {}, {}, '{}', {}, {})
+        RETURNING id_imovel;
+    '''.format(b_armario, n_quartos, n_suites,
+        area, n_salas_estar, n_vagas_garagem, descricao,
+        valor_aluguel, id_endereco))
+
+    data = cur.fetchall()
+
+    cur.execute('''
+        INSERT INTO apartamento (n_andar, valor_condominio,
+        b_portaria, n_salas_jantar, n_apartamento, id_imovel)
+        VALUES({})
+    '''.format(n_andar, valor_condominio, b_portaria,
+        n_salas_jantar, n_apartamento, data[0][0]))
+
+    conn.commit()
+    conn.close()
+
+def delete_apartamento(id_apartamento):
+    conn = get_database()
+    cur = conn.cursor()
+
+    cur.execute('''
+    SELECT
+        id_imovel
+    FROM imovel
+    NATURAL JOIN apartamento
+    WHERE id_apartamento = {};
+    '''.format(id_apartamento))
+    data = cur.fetchall()
+
+    cur.execute('''
+        DELETE FROM apartamento WHERE id_apartamento = {}
+    '''.format(id_apartamento))
+
+    cur.execute('''
+        DELETE FROM apartamento WHERE id_imovel = {}
+    '''.format(data[0][0]))
+
     conn.commit()
     conn.close()
 
@@ -154,6 +248,19 @@ def casa():
     casas = get_casas()
     enderecos = get_enderecos()
     return render_template('casa.html', casas=casas, enderecos=enderecos)
+
+@app.route('/apartamento', methods=['GET', 'POST'])
+def apartamento():
+    if request.method == 'POST':
+        resp = True if insert_apartamento(request.form) else False
+
+    deleteID = request.args.get('delete')
+    if deleteID is not None:
+        msg = delete_apartamento(deleteID)
+
+    aptos = get_apartamentos()
+    enderecos = get_enderecos()
+    return render_template('apartamento.html', aptos=aptos, enderecos=enderecos)
 
 @app.route('/')
 def index():
