@@ -28,7 +28,7 @@ CREATE TABLE public.imovel(
 	id_endereco integer,
 	id_imovel serial NOT NULL,
 	CONSTRAINT pk_imovel PRIMARY KEY (id_imovel)
-
+	
 );
 -- ddl-end --
 ALTER TABLE public.imovel OWNER TO postgres;

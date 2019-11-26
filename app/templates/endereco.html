@@ -1,16 +1,60 @@
 {% extends 'index.html' %}
 
 {% block content %}
+
 <div class="row">
   <div class="col">
-    <p>Cadastrar Endereco</p>
+    <h2>Cadastrar endereço</h2>
     <form method="post">
         <div class="form-group">
-            
+          <label for="id_numero">Número</label>
+          <input class="form-control" type="number" name="numero" id="id_numero" required>
         </div>
-      <button type="submit" class="btn btn-dark btn-lg btn-block">Cadastrar</button>
+        <div class="form-group">
+          <label for="id_rua">Rua</label>
+          <input class="form-control" type="text" name="rua" id="id_rua" required>
+        </div>
+        <div class="form-group">
+          <label for="id_bairro">Bairro</label>
+          <input class="form-control" type="text" name="bairro" id="id_bairro" required>
+        </div>
+        <div class="form-group">
+          <label for="id_cidade">Cidade</label>
+          <input class="form-control" type="text" name="cidade" id="id_cidade" required>
+        </div>
+      <div class="">
+        <button type="submit" class="btn btn-dark btn-lg btn-block">Cadastrar</button>
+      </div>
     </form>
   </div>
 </div>
+
+<div style="padding-top: 1em;" class="row">
+  <div class="col">
+    <h2>Endereços</h2>
+    <table class="table table-bordered">
+      <thead class="thead">
+	        <tr>
+	          <th scope="col">Número</th>
+	          <th scope="col">Rua</th>
+	          <th scope="col">Bairro</th>
+	          <th scope="col">Cidade</th>
+	        </tr>
+    	</thead>
+        <tbody>
+        	{% for endereco in enderecos %}
+        	<tr>
+				<td>{{ endereco[0] }}</td>
+				<td>{{ endereco[1] }}</td>
+				<td>{{ endereco[2] }}</td>
+				<td>{{ endereco[3] }}</td>
+			</tr>
+        	{% endfor %}
+        </tbody>
+    </table>
+  </div>
+</div>
+
+
 
 {% endblock %}

@@ -51,6 +51,23 @@ def get_casas():
     conn.close()
     return data
 
+def insert_endereco(values):
+    numero = values['numero']
+    rua = values['rua']
+    bairro = values['bairro']
+    cidade = values['cidade']
+
+    conn = get_database()
+    cur = conn.cursor()
+
+    cur.execute('''
+        INSERT INTO endereco (numero, rua, bairro, cidade)
+        VALUES({}, '{}', '{}', '{}')
+    '''.format(numero, rua, bairro, cidade))
+
+    conn.commit()
+    conn.close()
+
 def insert_casa(values):
     id_endereco = values['id_endereco']
     b_armario = values['b_armario']
@@ -117,8 +134,11 @@ def delete_casa(id_casa):
 def update():
     return None
 
-@app.route('/endereco', methods=['GET', 'POST']):
+@app.route('/endereco', methods=['GET', 'POST'])
 def endereco():
+    if request.method == 'POST':
+        resp = True if insert_endereco(request.form) else False
+    
     enderecos = get_enderecos()
     return render_template('endereco.html', enderecos=enderecos)
 
