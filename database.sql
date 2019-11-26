@@ -24,6 +24,7 @@ CREATE TABLE public.imovel(
 	n_salas_estar smallint,
 	n_vagas_garagem smallint,
 	descricao varchar,
+	valor_aluguel double precision,
 	id_endereco integer,
 	id_imovel serial NOT NULL,
 	CONSTRAINT pk_imovel PRIMARY KEY (id_imovel)
@@ -55,7 +56,6 @@ ALTER TABLE public.apartamento OWNER TO postgres;
 CREATE TABLE public.casa(
 	id_casa serial NOT NULL,
 	id_imovel integer NOT NULL,
-	b_quintal boolean DEFAULT FALSE,
 	CONSTRAINT pk_casa PRIMARY KEY (id_casa)
 
 );
@@ -126,31 +126,31 @@ VALUES(30, 'Shisui Guerreiro', 'Shippuden', 'Naruto');
 --IMOVEIS
 INSERT INTO imovel
 (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, 
-descricao, id_endereco)
-VALUES(True, 1, 1, 1000.0, 2, 1, 'Um lugar belo.', 1);
+descricao, valor_aluguel, id_endereco)
+VALUES(True, 1, 1, 1000.0, 2, 1, 'Um lugar belo.', 1111, 1);
 
 INSERT INTO imovel
 (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, 
-descricao, id_endereco)
-VALUES(False, 2, 2, 2000.0, 2, 2, 'Um lugar confortável.', 2);
+descricao, valor_aluguel, id_endereco)
+VALUES(False, 2, 2, 2000.0, 2, 2, 'Um lugar confortável.', 2222, 2);
 
 INSERT INTO imovel
 (b_armario, n_quartos, n_suites, area, n_salas_estar, n_vagas_garagem, 
-descricao, id_endereco)
-VALUES(True, 3, 3, 3000.0, 3, 3, 'Um lugar interessante.', 3);
+descricao, valor_aluguel, id_endereco)
+VALUES(True, 3, 3, 3000.0, 3, 3, 'Um lugar interessante.', 3333, 3);
 
 --CASAS
 INSERT INTO casa
-(id_imovel, b_quintal)
-VALUES(1, True);
+(id_imovel)
+VALUES(1);
 
 INSERT INTO casa
-(id_imovel, b_quintal)
-VALUES(2, True);
+(id_imovel)
+VALUES(2);
 
 INSERT INTO casa
-(id_imovel, b_quintal)
-VALUES(3, False);
+(id_imovel)
+VALUES(3);
 
 --APARTAMENTO
 INSERT INTO apartamento

@@ -24,7 +24,7 @@ def get_database():
                             port     = settings['port'])
     return conn
 
-def get_addresses():
+def get_enderecos():
     conn = get_database()
     cur = conn.cursor()
     cur.execute('SELECT * FROM endereco')
@@ -40,8 +40,8 @@ def get_casas():
     SELECT
         b_armario, n_quartos, n_suites,
         area, n_salas_estar, n_vagas_garagem,
-        descricao, b_quintal, numero, rua,
-        bairro, cidade, id_casa
+        descricao, numero, rua,
+        bairro, cidade, valor_aluguel, id_casa
     FROM imovel
     NATURAL JOIN endereco
     NATURAL JOIN casa;
@@ -51,27 +51,84 @@ def get_casas():
     conn.close()
     return data
 
+def insert_casa(values):
+    id_endereco = values['id_endereco']
+    b_armario = values['b_armario']
+    if(b_armario == "on"):
+        b_armario = True
+    else:
+        b_armario = False
+    n_quartos = values['n_quartos']
+    n_suites = values['n_suites']
+    area = values['area']
+    n_salas_estar = values['n_salas_estar']
+    n_vagas_garagem = values['n_vagas_garagem']
+    descricao = values['descricao']
+    valor_aluguel = values['valor_aluguel']
+    
+    conn = get_database()
+    cur = conn.cursor()
+    
+    cur.execute('''
+        INSERT INTO imovel (b_armario, n_quartos, n_suites,
+        area, n_salas_estar, n_vagas_garagem, descricao,
+        valor_aluguel, id_endereco)
+        VALUES({}, {}, {}, {}, {}, {}, '{}', {}, {})
+        RETURNING id_imovel;
+    '''.format(b_armario, n_quartos, n_suites,
+        area, n_salas_estar, n_vagas_garagem, descricao, 
+        valor_aluguel, id_endereco))
+    
+    data = cur.fetchall()
+    
+    cur.execute('''
+        INSERT INTO casa (id_imovel)
+        VALUES({})
+    '''.format(data[0][0]))
+
+    conn.commit()
+    conn.close()
+
+
+def delete_casa(id_casa):
+    conn = get_database()
+    cur = conn.cursor()
+    
+    cur.execute('''
+    SELECT
+        id_imovel
+    FROM imovel
+    NATURAL JOIN casa
+    WHERE id_casa = {};
+    '''.format(id_casa))
+    data = cur.fetchall()
+
+    cur.execute('''
+        DELETE FROM casa WHERE id_casa = {}
+    '''.format(id_casa))
+
+    cur.execute('''
+        DELETE FROM casa WHERE id_imovel = {}
+    '''.format(data[0][0]))
+    
+    conn.commit()
+    conn.close()
+
+def update():
+    return None
+
 @app.route('/casa', methods=['GET', 'POST'])
 def casa():
     if request.method == 'POST':
-        id_imovel = request.form['id_imovel']
-        id_endereco = request.form['id_endereco']
-        b_quintal = request.form['b_quintal']
-        b_armario = request.form['b_armario']
-        n_quartos = request.form['n_quartos']
-        n_suites = request.form['n_suites']
-        area = request.form['area']
-        n_salas_estar = request.form['n_salas_estar']
-        n_vagas_garagem = request.form['n_vagas_garagem']
-        descricao = request.form['descricao']
-        resp = True if insert_casa(, ) else False
+        resp = True if insert_casa(request.form) else False
 
     deleteID = request.args.get('delete')
     if deleteID is not None:
         msg = delete_casa(deleteID)
 
     casas = get_casas()
-    return render_template('casa.html', casas=casas)
+    enderecos = get_enderecos()
+    return render_template('casa.html', casas=casas, enderecos=enderecos)
 
 @app.route('/')
 def index():
