@@ -194,7 +194,7 @@ def insert_apartamento(values):
     cur.execute('''
         INSERT INTO apartamento (n_andar, valor_condominio,
         b_portaria, n_salas_jantar, n_apartamento, id_imovel)
-        VALUES({})
+        VALUES({}, {}, {}, {}, {}, {})
     '''.format(n_andar, valor_condominio, b_portaria,
         n_salas_jantar, n_apartamento, data[0][0]))
 
@@ -232,7 +232,7 @@ def update():
 def endereco():
     if request.method == 'POST':
         resp = True if insert_endereco(request.form) else False
-    
+
     enderecos = get_enderecos()
     return render_template('endereco.html', enderecos=enderecos)
 

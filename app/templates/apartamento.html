@@ -8,21 +8,21 @@
       <thead class="thead">
         <tr>
           <th scope="col">Armário</th>
-          <th scope="col">Quartos</th>
+          <th scope="col">Qtos</th>
           <th scope="col">Suites</th>
           <th scope="col">M²</th>
-          <th scope="col">Salas de Estar</th>
-          <th scope="col">Vagas na Garagem</th>
-          <th scope="col">Descricao</th>
+          <th scope="col">S. Estar</th>
+          <th scope="col">Vagas Gar.</th>
+          <th scope="col">Descr.</th>
           <th scope="col">Endereço</th>
           <th scope="col">Valor</th>
           <th scope="col">Andar</th>
           <th scope="col">Condomínio</th>
           <th scope="col">P. 24h</th>
-          <th scope="col">Salas de Jantar</th>
+          <th scope="col">S. Jantar</th>
           <th scope="col">Nmr.</th>
-          <th scope="col">Remover</th>
-          <th scope="col">Atualizar</th>
+          <th scope="col">Del</th>
+          <!-- <th scope="col">Atualizar</th> -->
         </tr>
       </thead>
       <tbody>
@@ -35,7 +35,7 @@
               <td>{{ apto[4] }}</td>
               <td>{{ apto[5] }}</td>
               <td>{{ apto[6] }}</td>
-              <td>{{ apto[10] }} : {{ apto[9] }} : {{ apto[8] }} : {{ apto[7] }}</td>
+              <td>{{ apto[10] }}, {{ apto[9] }}, {{ apto[8] }} - {{ apto[7] }}</td>
               <td>{{ apto[11] }}</td>
               <td>{{ apto[12] }}</td>
               <td>{{ apto[13] }}</td>
@@ -48,13 +48,13 @@
                   <button class="btn btn-dark" type="submit" form="formDelete{{ apto[17] }}">X</button>
                 </form>
               </td>
-              <td style="text-align: center;">
+              <!-- <td style="text-align: center;">
                 <form method="get" action="update" id="id_formUpdate{{ apto[17] }}">
                   <input type="hidden" name="type" value="2">
                   <input type="hidden" name="update" value="{{ apto[17] }}">
                   <button class="btn btn-dark" type="submit" form="formUpdate{{ apto[17] }}">U</button>
                 </form>
-              </td>
+              </td> -->
           </tr>
         {% endfor %}
       </tbody>

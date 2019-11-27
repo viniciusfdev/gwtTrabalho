@@ -17,7 +17,7 @@
           <th scope="col">Contém quintal</th>
           <th scope="col">Endereço</th>
           <th scope="col">Remover</th>
-          <th scope="col">Atualizar</th>
+          <!-- <th scope="col">Atualizar</th> -->
         </tr>
       </thead>
       <tbody>
@@ -39,13 +39,13 @@
                   <button class="btn btn-dark" type="submit" form="formDelete{{ casa[12] }}">X</button>
                 </form>
               </td>
-              <td style="text-align: center;">
+              <!-- <td style="text-align: center;">
                 <form method="get" action="update" id="id_formUpdate{{ casa[12] }}">
                   <input type="hidden" name="type" value="2">
                   <input type="hidden" name="update" value="{{ casa[12] }}">
                   <button class="btn btn-dark" type="submit" form="formUpdate{{ casa[12] }}">U</button>
                 </form>
-              </td>
+              </td> -->
           </tr>
         {% endfor %}
       </tbody>
@@ -106,7 +106,7 @@
 
 <div style="padding-top: 1em;" class="row">
   <form class="col" method="get" action="endereco">
-    <button class="btn btn-dark" type="submit">Usar outro endereco</button>
+    <button class="btn btn-dark" type="submit">Usar outro endereço</button>
   </form>
 </div>
 
